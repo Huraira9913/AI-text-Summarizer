@@ -1,0 +1,189 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>House of Wisdom</title>
+
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+
+<style>
+
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+    font-family:'Poppins',sans-serif;
+}
+
+body{
+    background: linear-gradient(135deg,#0f2027,#203a43,#2c5364);
+    min-height:100vh;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    color:white;
+}
+
+.wrapper{
+    width:95%;
+    max-width:1100px;
+    background: rgba(0,0,0,0.55);
+    backdrop-filter: blur(20px);
+    border-radius:20px;
+    padding:50px;
+    box-shadow:0 25px 60px rgba(0,0,0,0.6);
+    border:1px solid rgba(255,255,255,0.08);
+}
+
+.header{
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    margin-bottom:40px;
+}
+
+.logo{
+    font-size:28px;
+    font-weight:600;
+    letter-spacing:1px;
+}
+
+.tagline{
+    font-size:14px;
+    opacity:0.7;
+}
+
+textarea{
+    width:100%;
+    height:200px;
+    background:#111;
+    border:1px solid rgba(255,255,255,0.08);
+    border-radius:12px;
+    padding:20px;
+    color:white;
+    font-size:14px;
+    outline:none;
+    transition:0.3s;
+}
+
+textarea:focus{
+    border:1px solid #00c6ff;
+    box-shadow:0 0 15px rgba(0,198,255,0.3);
+}
+
+.button-area{
+    margin-top:25px;
+    text-align:right;
+}
+
+button{
+    background:linear-gradient(90deg,#00c6ff,#0072ff);
+    border:none;
+    padding:12px 35px;
+    border-radius:30px;
+    color:white;
+    font-weight:500;
+    cursor:pointer;
+    transition:0.3s;
+    letter-spacing:0.5px;
+}
+
+button:hover{
+    transform:translateY(-2px);
+    box-shadow:0 10px 25px rgba(0,114,255,0.4);
+}
+
+.result-box{
+    margin-top:40px;
+    background:#0f0f0f;
+    padding:30px;
+    border-radius:15px;
+    border:1px solid rgba(255,255,255,0.05);
+}
+
+.result-box h3{
+    margin-bottom:15px;
+    font-weight:500;
+}
+
+.result-text{
+    font-size:14px;
+    line-height:1.8;
+    opacity:0.9;
+}
+
+.stats{
+    margin-top:20px;
+    font-size:13px;
+    opacity:0.6;
+}
+
+audio{
+    margin-top:20px;
+    width:100%;
+}
+
+.footer{
+    margin-top:50px;
+    text-align:center;
+    font-size:12px;
+    opacity:0.4;
+}
+
+@media(max-width:768px){
+    .wrapper{
+        padding:30px;
+    }
+}
+
+</style>
+</head>
+
+<body>
+
+<div class="wrapper">
+
+    <div class="header">
+        <div class="logo">House of Wisdom</div>
+        <div class="tagline">AI Powered Text Intelligence</div>
+    </div>
+
+    <form action="/summarize" method="POST">
+        <textarea name="input_text" placeholder="Paste your text here for intelligent summarization..."></textarea>
+        
+        <div class="button-area">
+            <button type="submit">Generate Summary</button>
+        </div>
+    </form>
+
+    {% if summary %}
+    <div class="result-box">
+        <h3>Summary Output</h3>
+
+        <div class="result-text">
+            {{ summary }}
+        </div>
+
+        <div class="stats">
+            Original Words: {{ original_len }} |
+            Summary Words: {{ summary_len }}
+        </div>
+
+        {% if audio_file %}
+        <audio controls>
+            <source src="{{ url_for('static', filename=audio_file) }}" type="audio/mpeg">
+        </audio>
+        {% endif %}
+
+    </div>
+    {% endif %}
+
+    <div class="footer">
+        © 2026 Muhammad Abu Huraira. All rights reserved.
+    </div>
+
+</div>
+
+</body>
+</html>
